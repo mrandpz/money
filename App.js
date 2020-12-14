@@ -12,12 +12,12 @@ import {
   StyleSheet,
   ScrollView,
   View,
+  Alert,
   Text,
   StatusBar,
 } from 'react-native';
-
+import {Button, Header, Avatar} from 'react-native-elements';
 import {
-  Header,
   LearnMoreLinks,
   Colors,
   DebugInstructions,
@@ -25,20 +25,44 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 const App: () => React$Node = () => {
+  const createTwoButtonAlert = () =>
+    Alert.alert('Alert Title', 'My Alert Msg', [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: "OK", onPress: () => console.log("OK Pressed") }
+      ]
+    );
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
+      <Header
+        leftComponent={{ icon: 'menu', color: '#fff' }}
+        centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
+        rightComponent={{ icon: 'home', color: '#fff' }}
+      />
       <SafeAreaView>
         <ScrollView
           contentInsetAdjustmentBehavior="automatic"
           style={styles.scrollView}>
-          <Header />
+          
           {global.HermesInternal == null ? null : (
             <View style={styles.engine}>
               <Text style={styles.footer}>Engine: Hermes</Text>
             </View>
           )}
+          
           <View style={styles.body}>
+          <Button
+            title="Solid Button"
+          />
+          <Button
+            title="Outline button"
+            type="outline"
+          />
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Step One</Text>
               <Text style={styles.sectionDescription}>
