@@ -1,45 +1,44 @@
+/*
+ * @Author: Mr.pz
+ * @Date: 2020-12-28 21:31:43
+ * @Last Modified by:   Mr.pz
+ * @Last Modified time: 2020-12-28 21:31:43
+ * 从侧边拉出
+ */
+
 import * as React from 'react';
-import {View, Text, Button, Image} from 'react-native';
+import {Button, View} from 'react-native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-function Feed() {
-  return <Text>Feed</Text>;
-}
-function Messages() {
-  return <Text>Messages</Text>;
-}
-
-const Tab = createBottomTabNavigator();
-function Home() {
+function HomeScreen({navigation}) {
   return (
-    <Tab.Navigator>
-      <Tab.Screen name="Feed" component={Feed} />
-      <Tab.Screen name="Messages" component={Messages} />
-    </Tab.Navigator>
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Button
+        onPress={() => navigation.navigate('Notifications')}
+        title="Go to notifications"
+      />
+    </View>
   );
 }
-function Profile() {
-  return <Text>Profile</Text>;
+
+function NotificationsScreen({navigation}) {
+  return (
+    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      <Button onPress={() => navigation.goBack()} title="Go back home" />
+    </View>
+  );
 }
 
-function Settings() {
-  return <Text>Settings</Text>;
-}
-
-const Stack = createStackNavigator();
-
-function App() {
+const Drawer = createDrawerNavigator();
+// 侧边拉出
+export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Profile" component={Profile} />
-        <Stack.Screen name="Settings" component={Settings} />
-      </Stack.Navigator>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+      </Drawer.Navigator>
     </NavigationContainer>
   );
 }
-
-export default App;

@@ -6,4 +6,9 @@
 5、发现cmd+r没有刷新的时候，可以按cmd+d，实体机就摇手机，安卓ctrl+m
 
 ### 2 嵌套路由
+#### 底部导航栏
 @react-navigation/bottom-tabs
+
+#### 侧边导航栏
+yarn add @react-navigation/drawer
+
