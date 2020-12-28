@@ -1,77 +1,48 @@
 /*
  * @Author: Mr.pz
- * @Date: 2020-12-28 21:31:43
- * @Last Modified by: Mr.pz
- * @Last Modified time: 2020-12-28 22:01:01
- * 从侧边拉出
+ * @Date: 2020-12-28 22:12:47
+ * @Last Modified by:   Mr.pz
+ * @Last Modified time: 2020-12-28 22:12:47
+ * 解决刘海屏的安全范围
  */
 
 import * as React from 'react';
-import {Button, View, Text} from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
-import {useIsDrawerOpen} from '@react-navigation/drawer';
-import {DrawerActions} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {SafeAreaView, Text, View} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
-function HomeScreen({navigation}) {
+function Demo() {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text style={{fontSize: 30}}>This is the home screen!</Text>
-      <Button
-        onPress={() => navigation.navigate('MyModal')}
-        title="Open Modal"
-      />
-    </View>
+    <SafeAreaView
+      style={{flex: 1, justifyContent: 'space-between', alignItems: 'center'}}>
+      <Text>This is top text.</Text>
+      <Text>This is bottom text.</Text>
+    </SafeAreaView>
   );
 }
 
-function DetailsScreen() {
-  return (
-    <View>
-      <Text>Details</Text>
-    </View>
-  );
-}
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
-function ModalScreen({navigation}) {
-  return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text style={{fontSize: 30}}>This is a modal!</Text>
-      <Button onPress={() => navigation.goBack()} title="Dismiss" />
-    </View>
-  );
-}
-
-const MainStack = createStackNavigator();
-const RootStack = createStackNavigator();
-
-function MainStackScreen() {
-  return (
-    <MainStack.Navigator>
-      <MainStack.Screen name="Home" component={HomeScreen} />
-      <MainStack.Screen name="Details" component={DetailsScreen} />
-    </MainStack.Navigator>
-  );
-}
-
-function RootStackScreen() {
-  return (
-    <RootStack.Navigator mode="modal">
-      <RootStack.Screen
-        name="Main"
-        component={MainStackScreen}
-        options={{headerShown: false}}
-      />
-      <RootStack.Screen name="MyModal" component={ModalScreen} />
-    </RootStack.Navigator>
-  );
-}
 export default function App() {
   return (
-    <NavigationContainer>
-      <RootStackScreen />
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home" headerMode="none">
+          <Stack.Screen name="Home">
+            {() => (
+              <Tab.Navigator initialRouteName="Analytics" tabBar={() => null}>
+                <Tab.Screen name="Analytics" component={Demo} />
+                <Tab.Screen name="Profile" component={Demo} />
+              </Tab.Navigator>
+            )}
+          </Stack.Screen>
+
+          <Stack.Screen name="Settings" component={Demo} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
