@@ -2,84 +2,90 @@
  * @Author: Mr.pz
  * @Date: 2020-12-28 21:31:43
  * @Last Modified by: Mr.pz
- * @Last Modified time: 2020-12-28 21:45:05
+ * @Last Modified time: 2020-12-28 21:57:44
  * 从侧边拉出
  */
 
 import * as React from 'react';
 import {Button, View, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
 import {useIsDrawerOpen} from '@react-navigation/drawer';
 import {DrawerActions} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-function HomeScreen({navigation}) {
-  const isOpen = useIsDrawerOpen();
-  console.log(isOpen); // 启动的控制台查看
+function HomeScreen() {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Button
-        onPress={() => navigation.navigate('Notifications')}
-        title="Go to notifications"
-      />
-      <Button onPress={() => navigation.openDrawer()} title="openDrawer" />
-      <Button onPress={() => navigation.closeDrawer()} title="closeDrawer" />
-      <Button onPress={() => navigation.toggleDrawer()} title="toggleDrawer" />
-      <Button
-        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-        title="action 任何打开"
-      />
-      <Text>左侧状态..............{isOpen}</Text>
-      <Button
-        // 默认跳到profile 修改默认，并携带参数
-        onPress={() =>
-          navigation.navigate('Root', {
-            screen: 'Settings',
-            params: {user: 'jane'},
-          })
-        }
-        title="跳到指定子路由"
-      />
-    </View>
+    <Text style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+      Home
+    </Text>
   );
 }
 
-function Profile() {
+function ProfileScreen({navigation}) {
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      console.log('生命周期');
+      // Screen was focused
+      // Do something
+    });
+
+    return unsubscribe;
+  }, [navigation]);
   return <Text>'Profile'</Text>;
 }
-function Settings() {
+function SettingsScreen() {
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+      console.log('生命周期2');
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, []),
+  );
   return <Text>'Settings'</Text>;
 }
-const Stack = createStackNavigator();
-function Root({route}) {
-  console.log(route.params, '获取路由传单');
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Settings" component={Settings} />
-    </Stack.Navigator>
-  );
-}
 
-function NotificationsScreen({navigation}) {
+function DetailsScreen({navigation}) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
       <Button onPress={() => navigation.goBack()} title="Go back home" />
+      DetailsScreen
     </View>
   );
 }
 
-const Drawer = createDrawerNavigator();
-// 侧边拉出
+const HomeStack = createDrawerNavigator();
+const SettingsStack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-        <Drawer.Screen name="Root" component={Root} />
-      </Drawer.Navigator>
+      <Tab.Navigator>
+        <Tab.Screen name="First">
+          {() => (
+            <SettingsStack.Navigator>
+              <SettingsStack.Screen
+                name="Settings"
+                component={SettingsScreen}
+              />
+              <SettingsStack.Screen name="Profile" component={ProfileScreen} />
+            </SettingsStack.Navigator>
+          )}
+        </Tab.Screen>
+        <Tab.Screen name="Second">
+          {() => (
+            <HomeStack.Navigator>
+              <HomeStack.Screen name="Home" component={HomeScreen} />
+              <HomeStack.Screen name="Details" component={DetailsScreen} />
+            </HomeStack.Navigator>
+          )}
+        </Tab.Screen>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
