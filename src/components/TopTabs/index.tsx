@@ -2,17 +2,17 @@
  * @Author: Mr.pz
  * @Date: 2021-01-03 01:02:27
  * @Last Modified by: Mr.pz
- * @Last Modified time: 2021-01-03 01:24:31
+ * @Last Modified time: 2021-01-03 22:41:20
  * 顶部tab切换
  */
 
 import * as React from 'react';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {Text} from 'react-native-paper';
+import Recommend from 'page/Recommend';
 
 const Tab = createMaterialTopTabNavigator();
 
-const Recommend = () => <Text>Recommend</Text>;
 const SettingsScreen = () => <Text>456</Text>;
 
 const config = [
