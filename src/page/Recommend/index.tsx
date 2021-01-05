@@ -11,12 +11,6 @@ import {useState} from 'react';
 import {Text, ScrollView} from 'react-native';
 import FlexColumn from 'components/FlexColumn';
 
-export interface DataSource {
-  imgSrc: string;
-  text: string;
-  url: string;
-}
-
 export default () => {
   return (
     <ScrollView>

@@ -1,7 +1,11 @@
-import {DataSource} from 'page/Recommend';
 import * as React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 
+export interface DataSource {
+  imgSrc: string;
+  text: string;
+  url: string;
+}
 interface IProps {
   dataSource: DataSource[];
   count: number;
