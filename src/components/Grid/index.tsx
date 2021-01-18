@@ -1,3 +1,9 @@
+/*
+ * @Author: tiny
+ * @Date: 2021-01-18 23:38:20
+ * @Last Modified by:   tiny
+ * @Last Modified time: 2021-01-18 23:38:20
+ */
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 
