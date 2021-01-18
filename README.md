@@ -21,3 +21,6 @@ MaterialCommunityIcons.loadFont();
 
 ```
 
+### 如何打开控制台
+
+`command + d` 如果没反应，先 `shift + D` 再 `command + d` 
