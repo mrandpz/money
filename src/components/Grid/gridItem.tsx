@@ -2,7 +2,7 @@
  * @Author: tiny
  * @Date: 2021-01-18 23:37:30
  * @Last Modified by: tiny
- * @Last Modified time: 2021-01-18 23:38:07
+ * @Last Modified time: 2021-01-19 22:29:35
  */
 import * as React from 'react';
 import {Image, StyleSheet, View, Text} from 'react-native';
